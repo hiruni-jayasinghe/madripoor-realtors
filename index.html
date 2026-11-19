@@ -570,6 +570,29 @@ select{-webkit-appearance:none;-moz-appearance:none;appearance:none;background-i
 select::-ms-expand{display:none}
 .fsel select,.vform select{-webkit-appearance:none;appearance:none;background-image:linear-gradient(var(--green),var(--green));background-repeat:no-repeat;background-size:14px 1px;background-position:right 2px center;padding-right:30px}
 .cf-meta i::before,.ci-t em i::before{color:#A8925F}
+
+/* ===== "What we sell" tiles ===== */
+.types{padding-block:0 clamp(72px,9vw,120px)}
+.types-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px 24px;flex-wrap:wrap;padding-bottom:18px;margin-bottom:28px;border-bottom:1px solid var(--line)}
+.types-sub{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.types-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.tile{position:relative;display:block;aspect-ratio:4/5;max-width:100%;overflow:hidden;text-decoration:none;color:var(--paper);background:var(--b)}
+.tile-media{position:absolute;inset:0;background:radial-gradient(110% 80% at 75% 12%,rgba(255,255,255,.35),rgba(255,255,255,0) 60%),linear-gradient(170deg,var(--a),var(--b));transition:transform 1.6s var(--ease)}
+.tile-media img{width:100%;height:100%;object-fit:cover;display:block}
+.tile:hover .tile-media{transform:scale(1.04)}
+.tile-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(14,22,18,.72) 0%,rgba(14,22,18,.15) 50%,rgba(14,22,18,0) 70%)}
+.tile::after{content:"";position:absolute;inset:14px;border:1px solid rgba(194,174,132,.5);pointer-events:none;transition:inset .7s var(--ease),border-color .7s var(--ease)}
+.tile:hover::after{inset:10px;border-color:rgba(194,174,132,.9)}
+.tile-no{position:absolute;right:30px;top:26px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:rgba(236,234,231,.75)}
+.tile-note{position:absolute;left:30px;top:28px;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:rgba(236,234,231,.6)}
+.tile-text{position:absolute;left:30px;right:30px;bottom:30px;display:flex;flex-direction:column;gap:10px}
+.tile-name{position:relative;align-self:flex-start;font-family:var(--display);text-transform:lowercase;font-size:clamp(48px,5vw,76px);line-height:.95;color:var(--paper);padding-bottom:8px}
+.tile-name::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--kabook);transform:scaleX(0);transform-origin:left;transition:transform .8s var(--ease)}
+.tile:hover .tile-name::after,.tile:focus-visible .tile-name::after{transform:scaleX(1)}
+.tile-meta{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--sand)}
+.tile-meta i{font-style:normal;color:var(--champagne);padding-inline:6px}
+.tile-note2{font-size:15px;color:rgba(236,234,231,.85)}
+@media (max-width:900px){.types-grid{grid-template-columns:minmax(0,1fr)}.tile{aspect-ratio:16/10}}
 </style>
 </head>
 <body>
@@ -608,7 +631,7 @@ select::-ms-expand{display:none}
           <span class="l" aria-hidden="true"><span>find your</span></span>
           <span class="l l2" aria-hidden="true"><span><span class="rot draw" id="rot"><span class="rot-word" id="rotWord">place.</span><svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 12 L298 12"></path></svg></span></span></span>
         </h1>
-        <p class="hero-sub">Homes, land and commercial property across the island. Honest prices, deeds checked before you pay, and one team from the first viewing to the keys.</p>
+        <p class="hero-sub">Houses, land and apartments across the island. Honest prices, deeds checked before you pay, and one team from the first viewing to the keys.</p>
         <div class="hero-ctas">
           <a class="btn magnetic" href="#properties">Browse properties</a>
           <a class="btn btn-line magnetic" href="#value">What's my property worth?</a>
@@ -673,6 +696,16 @@ select::-ms-expand{display:none}
         </svg>
         <figcaption class="plan-cap"><span class="mono">PLAN NO. MR/26/014 · SAMPLE</span><span>Land in Sri Lanka is measured in perches (P).</span></figcaption>
       </figure>
+    </div>
+  </section>
+
+  <section class="types" aria-label="Browse by property type">
+    <div class="wrap">
+      <div class="types-head" data-r>
+        <span class="eyebrow">What we sell</span>
+        <span class="types-sub">Houses, land and apartments across Sri Lanka</span>
+      </div>
+      <div class="types-grid" id="typesGrid"></div>
     </div>
   </section>
 
@@ -842,7 +875,7 @@ select::-ms-expand{display:none}
         <div id="vfields" style="display:flex;flex-direction:column;gap:16px">
           <div class="f"><label for="v-goal">I want to</label><select id="v-goal"><option>Sell my property</option><option>Rent out my property</option><option>Just know the value</option></select></div>
           <div class="row">
-            <div class="f"><label for="v-type">Type</label><select id="v-type"><option>House</option><option>Apartment</option><option>Land</option><option>Commercial</option></select></div>
+            <div class="f"><label for="v-type">Type</label><select id="v-type"><option>House</option><option>Apartment</option><option>Land</option></select></div>
             <div class="f"><label for="v-town">Town or area</label><input id="v-town" type="text" placeholder="e.g. Maharagama" required></div>
           </div>
           <div class="row">
@@ -867,7 +900,7 @@ select::-ms-expand{display:none}
   <div class="wrap view-head">
     <span class="crumb"><a href="#top">Home</a> / <span id="listCrumb">All properties</span></span>
     <h1 class="disp" id="listTitle">all properties</h1>
-    <p style="color:var(--muted);font-size:18px;max-width:52ch">Houses, apartments, land and commercial property across Sri Lanka. These are sample listings to show the design.</p>
+    <p style="color:var(--muted);font-size:18px;max-width:52ch">Houses, land and apartments across Sri Lanka. These are sample listings to show the design.</p>
   </div>
   <div class="wrap">
     <div class="ftabs" role="group" aria-label="Property type" id="ftabs" style="align-self:flex-start;display:inline-flex"></div>
@@ -903,7 +936,7 @@ select::-ms-expand{display:none}
       </div>
     </div>
     <div class="f-cols">
-      <div><strong>Property</strong><a href="#properties">All properties</a><a href="#buy">Buy</a><a href="#rent">Rent</a><a href="#land">Land</a><a href="#commercial">Commercial</a></div>
+      <div><strong>Property</strong><a href="#properties">All properties</a><a href="#buy">Buy</a><a href="#rent">Rent</a><a href="#houses">Houses</a><a href="#land">Land</a><a href="#apartments">Apartments</a></div>
       <div><strong>Owners</strong><a href="#value">Free valuation</a><a href="#services">Sell</a><a href="#services">Property management</a></div>
       <div><strong>Contact</strong><span>[Phone number]</span><span>[WhatsApp number]</span><span>[Email address]</span><span>[Office address]</span></div>
     </div>
@@ -1027,14 +1060,12 @@ select::-ms-expand{display:none}
     {id:'1042',kind:'house',type:'House',mode:'sale',price:78000000,title:'Four-bedroom house with garden',town:'Nugegoda',district:'Colombo',beds:4,baths:3,perches:15,sqft:2800,n:12,listed:'18 Nov 2026'},
     {id:'1041',kind:'apt',type:'Apartment',mode:'rent',price:185000,title:'Two-bedroom apartment with sea view',town:'Wellawatte',district:'Colombo',beds:2,baths:2,sqft:1150,floor:'8th floor',deposit:'3 months',n:10,listed:'17 Nov 2026'},
     {id:'1040',kind:'land',type:'Land',mode:'sale',price:45000000,title:'Hill-view land with clear deeds',town:'Kandy',district:'Kandy',perches:20,n:5,listed:'16 Nov 2026'},
-    {id:'1039',kind:'shop',type:'Commercial',mode:'sale',price:120000000,title:'Shop and office building on the main road',town:'Negombo',district:'Gampaha',perches:12,sqft:4200,floors:3,n:6,listed:'15 Nov 2026'},
     {id:'1038',kind:'house',type:'House',mode:'sale',price:34000000,title:'Starter home close to town',town:'Kurunegala',district:'Kurunegala',beds:3,baths:2,perches:10,sqft:1600,n:9,listed:'14 Nov 2026'},
     {id:'1037',kind:'apt',type:'Apartment',mode:'sale',price:62000000,title:'Three-bedroom apartment near Parliament',town:'Battaramulla',district:'Colombo',beds:3,baths:2,sqft:1450,floor:'5th floor',n:10,listed:'13 Nov 2026'},
     {id:'1036',kind:'house',type:'House',mode:'rent',price:120000,title:'Family house with garden',town:'Dehiwala',district:'Colombo',beds:3,baths:2,perches:12,sqft:1900,deposit:'2 months',n:9,listed:'12 Nov 2026'},
     {id:'1035',kind:'land',type:'Land',mode:'sale',price:28000000,title:'Coconut land, one acre',town:'Matara',district:'Matara',perches:160,n:5,listed:'11 Nov 2026'},
     {id:'1034',kind:'house',type:'House',mode:'sale',price:95000000,title:'Colonial-style house near the fort',town:'Galle',district:'Galle',beds:4,baths:4,perches:25,sqft:3200,n:14,listed:'10 Nov 2026'},
     {id:'1033',kind:'apt',type:'Apartment',mode:'rent',price:95000,title:'One-bedroom apartment near the lake',town:'Kandy',district:'Kandy',beds:1,baths:1,sqft:650,floor:'2nd floor',deposit:'2 months',n:7,listed:'9 Nov 2026',status:'Rented'},
-    {id:'1032',kind:'shop',type:'Commercial',mode:'rent',price:350000,title:'Ground-floor showroom with parking',town:'Rajagiriya',district:'Colombo',sqft:2000,deposit:'6 months',n:6,listed:'8 Nov 2026'},
     {id:'1031',kind:'house',type:'House',mode:'sale',price:52000000,title:'Two-storey house on a quiet lane',town:'Maharagama',district:'Colombo',beds:3,baths:2,perches:10,sqft:2000,n:10,listed:'7 Nov 2026',status:'Sold'},
     {id:'1030',kind:'land',type:'Land',mode:'sale',price:18500000,title:'Residential plot in a gated scheme',town:'Gampaha',district:'Gampaha',perches:12,n:4,listed:'6 Nov 2026'},
     {id:'1029',kind:'apt',type:'Apartment',mode:'rent',price:450000,title:'Furnished three-bedroom apartment',town:'Kollupitiya',district:'Colombo',beds:3,baths:3,sqft:1900,floor:'14th floor',deposit:'3 months',n:11,listed:'5 Nov 2026'}
@@ -1071,6 +1102,27 @@ select::-ms-expand{display:none}
 
   /* ---------- homepage rail: newest 8 + "view all" ---------- */
   const avail = P.filter(p => !p.status);
+  /* homepage "what we sell" tiles.
+     TO ADD YOUR PHOTOS: put the image address in photo, e.g. photo:'images/house.jpg'. Layout stays the same. */
+  const TYPES = [
+    {key:'houses', name:'houses', type:'House', photo:'', a:'#9A968A', b:'#4A524A', note:'Family homes and villas'},
+    {key:'land', name:'land', type:'Land', photo:'', a:'#9AAA90', b:'#3C5342', note:'Residential plots with clear deeds'},
+    {key:'apartments', name:'apartments', type:'Apartment', photo:'', a:'#959EA2', b:'#3E4A4D', note:'Apartments to buy or rent'}
+  ];
+  const mn = (v) => (Math.round(v/1e5)/10) + ' Mn';
+  $('typesGrid').innerHTML = TYPES.map((t, i) => {
+    const list = P.filter(p => p.type === t.type && !p.status);
+    const sale = list.filter(p => p.mode === 'sale').map(p => p.price);
+    const from = sale.length ? 'From LKR ' + mn(Math.min.apply(null, sale)) : '';
+    return '<a class="tile" href="#'+t.key+'" style="--a:'+t.a+';--b:'+t.b+'">'+
+      '<span class="tile-media">'+(t.photo ? '<img src="'+t.photo+'" alt="" loading="lazy">' : '<span class="tile-note">Photo to come</span>')+'</span>'+
+      '<span class="tile-shade" aria-hidden="true"></span>'+
+      '<span class="tile-no">'+String(i+1).padStart(2,'0')+'</span>'+
+      '<span class="tile-text"><span class="tile-name">'+t.name+'</span>'+
+      '<span class="tile-meta">'+list.length+' available'+(from ? ' <i>·</i> '+from : '')+'</span>'+
+      '<span class="tile-note2">'+t.note+'</span></span></a>';
+  }).join('');
+
   /* homepage catalogue: one featured property + numbered index (hover a row to preview it) */
   const feat = avail.slice(0, 6);
   if ($('llCount')) $('llCount').textContent = P.length;
@@ -1109,7 +1161,7 @@ select::-ms-expand{display:none}
   cfI.addEventListener('focusin', e => { const a = e.target.closest('a[data-i]'); if (a) showFeat(+a.dataset.i, true); });
 
   /* ---------- all properties ---------- */
-  const MODES = [['all','All','all properties','All properties'],['buy','Buy','homes for sale','Buy'],['rent','Rent','to rent','Rent'],['land','Land','land for sale','Land'],['commercial','Commercial','commercial','Commercial']];
+  const MODES = [['all','All','all properties','All properties'],['buy','Buy','homes for sale','Buy'],['rent','Rent','to rent','Rent'],['houses','Houses','houses','Houses'],['apartments','Apartments','apartments','Apartments'],['land','Land','land','Land']];
   const PRICES = [['','Any price'],['s0','Under LKR 40 Mn'],['s1','LKR 40 Mn to 80 Mn'],['s2','Over LKR 80 Mn'],['r0','Rent under LKR 150,000 / mo'],['r1','Rent over LKR 150,000 / mo']];
   const F = {mode:'all', q:'', district:'', price:'', beds:0, sort:'new', page:1};
   const PER = 9;
@@ -1123,7 +1175,8 @@ select::-ms-expand{display:none}
     if (F.mode === 'buy' && !(p.mode === 'sale' && (p.type === 'House' || p.type === 'Apartment'))) return false;
     if (F.mode === 'rent' && p.mode !== 'rent') return false;
     if (F.mode === 'land' && p.type !== 'Land') return false;
-    if (F.mode === 'commercial' && p.type !== 'Commercial') return false;
+    if (F.mode === 'houses' && p.type !== 'House') return false;
+    if (F.mode === 'apartments' && p.type !== 'Apartment') return false;
     if (F.q){ const q = F.q.toLowerCase(); if (!(p.town + ' ' + p.district + ' ' + p.title).toLowerCase().includes(q)) return false; }
     if (F.district && p.district !== F.district) return false;
     if (F.beds && !(p.beds >= F.beds)) return false;
@@ -1273,7 +1326,7 @@ select::-ms-expand{display:none}
   $('lbStage').addEventListener('pointerup', e => { if (sx === null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1); });
 
   /* ---------- router ---------- */
-  const LISTR = ['properties','buy','rent','land','commercial'];
+  const LISTR = ['properties','buy','rent','houses','apartments','land'];
   function show(v){ document.querySelectorAll('main[data-view]').forEach(m => { m.hidden = m.dataset.view !== v; }); }
   function route(){
     const h = decodeURIComponent(location.hash.slice(1));
