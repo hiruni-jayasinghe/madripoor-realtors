@@ -580,7 +580,9 @@ select::-ms-expand{display:none}
 .tile-media{position:absolute;inset:0;background:radial-gradient(110% 80% at 75% 12%,rgba(255,255,255,.35),rgba(255,255,255,0) 60%),linear-gradient(170deg,var(--a),var(--b));transition:transform 1.6s var(--ease)}
 .tile-media img{width:100%;height:100%;object-fit:cover;display:block}
 .tile:hover .tile-media{transform:scale(1.04)}
-.tile-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(14,22,18,.72) 0%,rgba(14,22,18,.15) 50%,rgba(14,22,18,0) 70%)}
+.tile-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,19,16,.9) 0%,rgba(12,19,16,.72) 30%,rgba(12,19,16,.25) 58%,rgba(12,19,16,0) 78%)}
+.tile-text{text-shadow:0 1px 18px rgba(0,0,0,.35)}
+@media (max-width:900px){.tile-shade{background:linear-gradient(to top,rgba(12,19,16,.9) 0%,rgba(12,19,16,.75) 45%,rgba(12,19,16,.3) 75%,rgba(12,19,16,.1) 100%)}}
 .tile::after{content:"";position:absolute;inset:14px;border:1px solid rgba(194,174,132,.5);pointer-events:none;transition:inset .7s var(--ease),border-color .7s var(--ease)}
 .tile:hover::after{inset:10px;border-color:rgba(194,174,132,.9)}
 .tile-no{position:absolute;right:30px;top:26px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:rgba(236,234,231,.75)}
@@ -1105,9 +1107,9 @@ select::-ms-expand{display:none}
   /* homepage "what we sell" tiles.
      TO ADD YOUR PHOTOS: put the image address in photo, e.g. photo:'images/house.jpg'. Layout stays the same. */
   const TYPES = [
-    {key:'houses', name:'houses', type:'House', photo:'', a:'#9A968A', b:'#4A524A', note:'Family homes and villas'},
-    {key:'land', name:'land', type:'Land', photo:'', a:'#9AAA90', b:'#3C5342', note:'Residential plots with clear deeds'},
-    {key:'apartments', name:'apartments', type:'Apartment', photo:'', a:'#959EA2', b:'#3E4A4D', note:'Apartments to buy or rent'}
+    {key:'houses', name:'houses', type:'House', photo:'images/house.jpg', a:'#9A968A', b:'#4A524A', note:'Family homes and villas'},
+    {key:'land', name:'land', type:'Land', photo:'images/land.jpg', a:'#9AAA90', b:'#3C5342', note:'Residential plots with clear deeds'},
+    {key:'apartments', name:'apartments', type:'Apartment', photo:'images/apartment.jpg', a:'#959EA2', b:'#3E4A4D', note:'Apartments to buy or rent'}
   ];
   const mn = (v) => (Math.round(v/1e5)/10) + ' Mn';
   $('typesGrid').innerHTML = TYPES.map((t, i) => {
